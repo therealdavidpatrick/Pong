@@ -168,10 +168,44 @@ function moveEverything() {
     }
 }
 
+    // The INTEGER VALUE of 0 refers to the LEFT WALL of the CANVAS. So if the RED BLOCK, i.e. the BALL, has a value LESS than 0, i.e. left of the LEFT WALL, the PROGRAM triggers the BALL to "bounce" to the RIGHT.
+    if(ballX < 0) {
+		
+		// This means that if the BALL hits any portion of the RACKET then to CHANGE DIRECTION, or effectively "bounce"
+		if(ballY > racket1 && 
+		   ballY < racket1+RACKET_HEIGHT) {
+			ballSpeedX = -ballSpeedX;
+			
+			// This creates different TRAJECTORIES and SPEEDS of the BALL based on the ANGLE of the RACKET that makes CONTACT with the BALL
+			var deltaY = ballY-(racket1+RACKET_HEIGHT/2);
+			ballSpeedY = deltaY * 0.35;
+
+		} else {
+
+			player2Score += 25;
+			player1Score -= 25;
 
 
+			// If the BALL does not make contact with the RACKET and touches the LEFT WALL, i.e. "less than zero," then the GAME RESETS
+			ballReset();	
+		}
+	}
 
+	if(ballY > canvas.height) { 
+		ballSpeedY = -ballSpeedY;
+	}
 
-
-
+	if(ballY < 0) {
+		ballSpeedY = -ballSpeedY;
+	} 
 }
+
+function drawTennisNet() { 
+	for(var i=0; i < canvas.height; i+=40) {
+		colorRect(canvas.width/2-1, i, 2, 20, 'green');
+	}
+}
+
+
+
+
