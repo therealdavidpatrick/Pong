@@ -92,3 +92,22 @@ window.onload = function() {
 		});
 
 }
+
+// This CENTERS the BALL on the SCREEN 
+function ballReset() {
+
+// When either PLAYER reaches the "winning score," the game RESETS both PLAYER'S scores to ZERO
+if(player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
+    displayTheWinScreen = true;
+}
+
+// This FLIPS the DIRECTION of the BALL after each RESET
+ballSpeedX = -ballSpeedX;	
+
+// HORIZONTAL CENTER
+ballX = canvas.width/2;
+
+// VERTICAL CENTER
+ballY = canvas.height/2;
+}
+
