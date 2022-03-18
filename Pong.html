@@ -206,6 +206,26 @@ function drawTennisNet() {
 	}
 }
 
+// We DEFINE this FUNCTION with the PARAMETERS of the variable CANVASCONTEXT 
+function drawEverything() {
 
+// The FUNCTION colorRect is DEFINED with canvasContext.fillStyle for the actual COLOR of the CANVAS and with canvasContext.FillRect for the 4 COORDINATES of the CANVAS,i.e. a BLACK SQUARE-SHAPED CANVAS
+colorRect(0,0,canvas.width,canvas.height, 'black');
 
+if(displayTheWinScreen) {
+    
+    canvasContext.fillStyle = 'white';
 
+    if(player1Score >= WINNING_SCORE) {
+        canvasContext.fillText("Oh wow, you actually won? That's crazy . . .", 350, 200);
+    } else if(player2Score >= WINNING_SCORE) {
+        canvasContext.fillText("Bruh, are you even trying?",350,200);
+    }
+
+    canvasContext.fillText("CONTINUE? ( then click the mouse, bro . . .)",350,500);
+    return;
+}
+
+drawTennisNet();
+
+}
