@@ -38,3 +38,28 @@ var racket2 = 250;
 const RACKET_HEIGHT = 100;
 const RACKET_THICKNESS = 10;
 
+// This correlates to the POSITION of the MOUSE when the GAME STARTS and whenever the PLAYER MOVES the MOUSE during GAMEPLAY
+function calculateMousePos(evt) {
+
+    // This correlates to the GAMEBOARD
+    var rect = canvas.getBoundingClientRect(); 
+
+    // This correlates to the actual HTML document 
+    var root = document.documentElement; 
+
+    var mouseX = evt.clientX - rect.left - root.scrollLeft;
+    var mouseY = evt.clientY - rect.top - root.scrollTop;
+    return {
+        x:mouseX,
+        y:mouseY
+    };
+}
+
+function handleMouseClick(evt) {
+    if(displayTheWinScreen) {
+    player1Score = 0;
+    player2Score = 0;
+    displayTheWinScreen = false; 
+    }
+}
+
