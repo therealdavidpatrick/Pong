@@ -63,3 +63,32 @@ function handleMouseClick(evt) {
     }
 }
 
+
+// None of the function below will execute until AFTER the window fully loads, i.e. the game will not start until AFTER the web application opens and fully loads
+window.onload = function() {
+	
+	// The document.getElementById() method returns an Element object that represents an HTML element with an id that matches a specified string. This is a quick way to access an element.
+	// So this takes the first JS variable CANVAS and corresponds to the HTML element CANVAS ID, i.e. GAMECANVAS
+	canvas = document.getElementById('gameCanvas'); 
+	
+	canvasContext = canvas.getContext('2d');
+
+	var framesPerSecond = 30; 
+
+    // This tells the PROGRAM to divide 1000 by 30 each time the FUNCTION drawEverything() gets called
+	setInterval(function() {
+		moveEverything(); 
+		drawEverything(); 
+	}, 1000/framesPerSecond);
+
+	canvas.addEventListener('mousedown',handleMouseClick);
+
+	canvas.addEventListener('mousemove',
+		function(evt) {
+			var mousePos = calculateMousePos(evt);
+
+			// This takes the RACKET value of 100, DIVIDES the value by 2, which EQUALS 50, and thus MOVES the RACKET from the MIDDLE of the RACKET to avoid awkward GAMEPLAY mechanics or configuration 
+			racket1 = mousePos.y-(RACKET_HEIGHT/2);
+		});
+
+}
