@@ -143,4 +143,35 @@ function moveEverything() {
     ballX = ballX + ballSpeedX;
     ballY = ballY + ballSpeedY;
 
+    // This tells the PROGRAM to use the WIDTH PARAMETER, which can always adjust, instead of a HARD INTEGER, which becomes problematic if we later change the SIZE of the CANVAS
+    if(ballX > canvas.width) {
+
+    if(ballY > racket2 && 
+    ballY < racket2+RACKET_HEIGHT) {
+
+        // The NEGATIVE VALUE will trigger the RED BLOCK, i.e. the BALL, to MOVE LEFT
+        // Using the NEGATIVE VALUE of the NAME of the VARIABLE rather than a HARD INTEGER will tell the PROGRAM to maintain the SAME SPEED of the RED BLOCK, i.e. the BALL
+        ballSpeedX = -ballSpeedX;
+    
+        var deltaY = ballY-(racket2+RACKET_HEIGHT/2);
+        ballSpeedY = deltaY * 0.35;
+
+    } else {
+
+        // Alternatively, player1Score++ and player2Score--
+        // When one player scores a point, the other player loses a point
+        player1Score += 25;
+        player2Score -= 25;
+
+    // If the BALL does not make contact with the RACKET and touches the LEFT WALL, i.e. "less than zero," then the GAME RESETS
+    ballReset();
+    }
+}
+
+
+
+
+
+
+
 }
