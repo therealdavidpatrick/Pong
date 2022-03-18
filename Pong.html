@@ -1,4 +1,4 @@
-<!-- PONG -->
+<html>
 
 <!--named and established standard SIZE for GAMEBOARD, i.e. 800px wide by 600px tall-->
 <canvas id="gameCanvas" width="800" height="600"></canvas> 
@@ -8,61 +8,70 @@
 // name of variable for information on the DIMENSIONS of the display area, or GAMEBOARD
 var canvas; 
 
+
 // UNDERLYING GRAPHICAL INFORMATION, e.g. rectangles, circles, colors, etc. 
 // The ORDER of the details will impact the outcome of all the objects, e.g. canvas, ball, tennis rackets, etc.
 var canvasContext; 
+
 
 // This defines the variables with an INTEGER VALUE of 50 for the X and Y AXIS of the BALL
 var ballX = 50;
 var ballY = 50;
 
+
 // This defines the variable with an INTEGER VALUE of 10 for the X AXIS
 var ballSpeedX = 10;
 
+
 // Positive integers on the Y axis create DOWNWARD motion, so a positive XY value results in movement to the LEFT and DOWN
 var ballSpeedY = 4;
+
 
 // Each game starts with both PLAYERS at an equal SCORE of ZERO
 var player1Score = 0; 
 var player2Score = 0;
 const WINNING_SCORE = 100;
 
+
 // Game defaults to NOT showing the WINNING SCREEN
 var displayTheWinScreen = false; 
+
 
 // Both players have one tennis racket 
 var racket1 = 250; 
 var racket2 = 250;
 
+
 // The VALUE will remain UNCHANGED because of CONST instead of VAR, i.e. the SIZE of the RACKET will never change, and ALL CAPS name to distinguish the variable as one of the unchangeable variables in the code
 const RACKET_HEIGHT = 100;
 const RACKET_THICKNESS = 10;
 
+
 // This correlates to the POSITION of the MOUSE when the GAME STARTS and whenever the PLAYER MOVES the MOUSE during GAMEPLAY
 function calculateMousePos(evt) {
 
-    // This correlates to the GAMEBOARD
-    var rect = canvas.getBoundingClientRect(); 
+	// This correlates to the GAMEBOARD
+	var rect = canvas.getBoundingClientRect(); 
 
-    // This correlates to the actual HTML document 
-    var root = document.documentElement; 
+	// This correlates to the actual HTML document 
+	var root = document.documentElement; 
 
-    var mouseX = evt.clientX - rect.left - root.scrollLeft;
-    var mouseY = evt.clientY - rect.top - root.scrollTop;
-    return {
-        x:mouseX,
-        y:mouseY
-    };
+
+	var mouseX = evt.clientX - rect.left - root.scrollLeft;
+	var mouseY = evt.clientY - rect.top - root.scrollTop;
+	return {
+		x:mouseX,
+		y:mouseY
+	};
 }
 
 function handleMouseClick(evt) {
-    if(displayTheWinScreen) {
-    player1Score = 0;
-    player2Score = 0;
-    displayTheWinScreen = false; 
-    }
+	if(displayTheWinScreen) {
+		player1Score = 0;
+		player2Score = 0;
+		displayTheWinScreen = false; 
+	}
 }
-
 
 // None of the function below will execute until AFTER the window fully loads, i.e. the game will not start until AFTER the web application opens and fully loads
 window.onload = function() {
@@ -96,80 +105,82 @@ window.onload = function() {
 // This CENTERS the BALL on the SCREEN 
 function ballReset() {
 
-// When either PLAYER reaches the "winning score," the game RESETS both PLAYER'S scores to ZERO
-if(player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
-    displayTheWinScreen = true;
-}
+	// When either PLAYER reaches the "winning score," the game RESETS both PLAYER'S scores to ZERO
+	if(player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
+		displayTheWinScreen = true;
+	}
+    
+	// This FLIPS the DIRECTION of the BALL after each RESET
+	ballSpeedX = -ballSpeedX;	
 
-// This FLIPS the DIRECTION of the BALL after each RESET
-ballSpeedX = -ballSpeedX;	
+	// HORIZONTAL CENTER
+	ballX = canvas.width/2;
 
-// HORIZONTAL CENTER
-ballX = canvas.width/2;
-
-// VERTICAL CENTER
-ballY = canvas.height/2;
+	// VERTICAL CENTER
+	ballY = canvas.height/2;
 }
 
 // This enables the COMPUTER to MOVE the RIGHT RACKET to ENGAGE the PLAYER
 function computerMovement() { 
 
-    // This enables the COMPUTER to keep its RACKET CENTERED with the BALL
-    var racket2Center = racket2 + (RACKET_HEIGHT/2);
+	// This enables the COMPUTER to keep its RACKET CENTERED with the BALL
+	var racket2Center = racket2 + (RACKET_HEIGHT/2);
 
-        if(racket2Center < ballY-35) {
+	if(racket2Center < ballY-35) {
 
-            // You can alternatively write "racket2 += 6" to avoid syntax error
-            // This makes the BALL MOVE DOWN
-            racket2 = racket2 + 6; 
+		// You can alternatively write "racket2 += 6" to avoid syntax error
+		// This makes the BALL MOVE DOWN
+		racket2 = racket2 + 6; 
 
-        } else if(racket2Center > ballY+35)  {
+	} else if(racket2Center > ballY+35)  {
 
-            // You can alternatively write "racket2 -= 6" to avoid syntax error
-            // This makes the BALL MOVE UP
-            racket2 = racket2 - 6;
-    }
+		// You can alternatively write "racket2 -= 6" to avoid syntax error
+		// This makes the BALL MOVE UP
+		racket2 = racket2 - 6;
+	}
 }
 
 // We DEFINE this FUNCTION with the STIPULATIONS of MOTION, SPEED, and DIRECTION, i.e. VELOCITY
 function moveEverything() {
 
-    if(displayTheWinScreen) {
-        return;
-    }
+	if(displayTheWinScreen) {
+		return;
+	}
 
-    computerMovement();
- 
-    ballX = ballX + ballSpeedX;
-    ballY = ballY + ballSpeedY;
+	computerMovement();
 
-    // This tells the PROGRAM to use the WIDTH PARAMETER, which can always adjust, instead of a HARD INTEGER, which becomes problematic if we later change the SIZE of the CANVAS
-    if(ballX > canvas.width) {
+	 
+	ballX = ballX + ballSpeedX;
+	ballY = ballY + ballSpeedY;
 
-    if(ballY > racket2 && 
-    ballY < racket2+RACKET_HEIGHT) {
+	// This tells the PROGRAM to use the WIDTH PARAMETER, which can always adjust, instead of a HARD INTEGER, which becomes problematic if we later change the SIZE of the CANVAS
+	if(ballX > canvas.width) {
 
-        // The NEGATIVE VALUE will trigger the RED BLOCK, i.e. the BALL, to MOVE LEFT
-        // Using the NEGATIVE VALUE of the NAME of the VARIABLE rather than a HARD INTEGER will tell the PROGRAM to maintain the SAME SPEED of the RED BLOCK, i.e. the BALL
-        ballSpeedX = -ballSpeedX;
-    
-        var deltaY = ballY-(racket2+RACKET_HEIGHT/2);
-        ballSpeedY = deltaY * 0.35;
+		if(ballY > racket2 && 
+		   ballY < racket2+RACKET_HEIGHT) {
 
-    } else {
+			// The NEGATIVE VALUE will trigger the RED BLOCK, i.e. the BALL, to MOVE LEFT
+			// Using the NEGATIVE VALUE of the NAME of the VARIABLE rather than a HARD INTEGER will tell the PROGRAM to maintain the SAME SPEED of the RED BLOCK, i.e. the BALL
+			ballSpeedX = -ballSpeedX;
+			
+			var deltaY = ballY-(racket2+RACKET_HEIGHT/2);
+			ballSpeedY = deltaY * 0.35;
 
-        // Alternatively, player1Score++ and player2Score--
-        // When one player scores a point, the other player loses a point
-        player1Score += 25;
-        player2Score -= 25;
+		} else {
 
-    // If the BALL does not make contact with the RACKET and touches the LEFT WALL, i.e. "less than zero," then the GAME RESETS
-    ballReset();
-    }
-}
+			// Alternatively, player1Score++ and player2Score--
+			// When one player scores a point, the other player loses a point
+			player1Score += 25;
+			player2Score -= 25;
 
-    // The INTEGER VALUE of 0 refers to the LEFT WALL of the CANVAS. So if the RED BLOCK, i.e. the BALL, has a value LESS than 0, i.e. left of the LEFT WALL, the PROGRAM triggers the BALL to "bounce" to the RIGHT.
-    if(ballX < 0) {
+
+			// If the BALL does not make contact with the RACKET and touches the LEFT WALL, i.e. "less than zero," then the GAME RESETS
+			ballReset();
+		}
+	}
+
+	// The INTEGER VALUE of 0 refers to the LEFT WALL of the CANVAS. So if the RED BLOCK, i.e. the BALL, has a value LESS than 0, i.e. left of the LEFT WALL, the PROGRAM triggers the BALL to "bounce" to the RIGHT.
+	if(ballX < 0) {
 		
 		// This means that if the BALL hits any portion of the RACKET then to CHANGE DIRECTION, or effectively "bounce"
 		if(ballY > racket1 && 
@@ -209,26 +220,24 @@ function drawTennisNet() {
 // We DEFINE this FUNCTION with the PARAMETERS of the variable CANVASCONTEXT 
 function drawEverything() {
 
-// The FUNCTION colorRect is DEFINED with canvasContext.fillStyle for the actual COLOR of the CANVAS and with canvasContext.FillRect for the 4 COORDINATES of the CANVAS,i.e. a BLACK SQUARE-SHAPED CANVAS
-colorRect(0,0,canvas.width,canvas.height, 'black');
+    // The FUNCTION colorRect is DEFINED with canvasContext.fillStyle for the actual COLOR of the CANVAS and with canvasContext.FillRect for the 4 COORDINATES of the CANVAS,i.e. a BLACK SQUARE-SHAPED CANVAS
+	colorRect(0,0,canvas.width,canvas.height, 'black');
+	
+	if(displayTheWinScreen) {
+		
+		canvasContext.fillStyle = 'white';
 
-if(displayTheWinScreen) {
-    
-    canvasContext.fillStyle = 'white';
+		if(player1Score >= WINNING_SCORE) {
+			canvasContext.fillText("Oh wow, you actually won? That's crazy . . .", 350, 200);
+		} else if(player2Score >= WINNING_SCORE) {
+			canvasContext.fillText("Bruh, are you even trying?",350,200);
+		}
 
-    if(player1Score >= WINNING_SCORE) {
-        canvasContext.fillText("Oh wow, you actually won? That's crazy . . .", 350, 200);
-    } else if(player2Score >= WINNING_SCORE) {
-        canvasContext.fillText("Bruh, are you even trying?",350,200);
-    }
+		canvasContext.fillText("CONTINUE? ( then click the mouse, bro . . .)",350,500);
+		return;
+	}
 
-    canvasContext.fillText("CONTINUE? ( then click the mouse, bro . . .)",350,500);
-    return;
-}
-
-drawTennisNet();
-
-}
+	drawTennisNet();
 
 	// The FUNCTION colorRect is DEFINED with canvasContext.fillStyle for the actual COLOR of the BLOCK and with canvasContext.FillRect for the 4 COORDINATES of the BLOCK,
 	// i.e. a WHITE VERTICAL RECTANGULAR "RACKET" placed on the LEFT WALL
