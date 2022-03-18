@@ -229,3 +229,42 @@ if(displayTheWinScreen) {
 drawTennisNet();
 
 }
+
+	// The FUNCTION colorRect is DEFINED with canvasContext.fillStyle for the actual COLOR of the BLOCK and with canvasContext.FillRect for the 4 COORDINATES of the BLOCK,
+	// i.e. a WHITE VERTICAL RECTANGULAR "RACKET" placed on the LEFT WALL
+	colorRect(0,racket1,RACKET_THICKNESS,RACKET_HEIGHT, 'red');
+
+	// The FUNCTION colorRect is DEFINED with canvasContext.fillStyle for the actual COLOR of the BLOCK and with canvasContext.FillRect for the 4 COORDINATES of the BLOCK,
+	// i.e. a WHITE VERTICAL RECTANGULAR "RACKET" placed on the RIGHT WALL, and the RIGHT WALL has a value of 800, or the CANVAS WIDTH, 
+    // so take the CANVAS WIDTH and SUBTRACT the RACKET VALUE of 10 to get 790, which places the "RACKET" alongside the RIGHT WALL
+	colorRect(canvas.width-RACKET_THICKNESS, racket2,RACKET_THICKNESS,RACKET_HEIGHT, 'blue');
+
+	// The FUNCTION colorCircle is DEFINED with canvasContext.fillStyle for COLOR and canvasContext.arc for the ROUND SHAPE of the BALL
+	colorCircle(ballX, ballY, 10, 'red');
+
+	// This places the PlAYER ONE SCORE on the LEFT SIDE of the CANVAS
+	canvasContext.fillText(player1Score,100,100);
+
+	// This places the PLAYER TWO SCORE on the RIGHT SIDE of the CANVAS
+	canvasContext.fillText(player2Score, canvas.width-100,100);
+}
+
+function colorCircle(centerX, centerY, radius, drawColor) {
+	
+	canvasContext.fillStyle = drawColor; 
+	canvasContext.beginPath();
+	
+			// Coordinates X, Y, Radius, Angles/Radians, when TRUE, essentially form a 
+			// circular shape, i.e. a ball, curved without edges 
+	canvasContext.arc(centerX, centerY, radius, 0, Math.PI*2, true);
+	canvasContext.fill();
+}
+
+function colorRect(leftX, topY, width, height, drawColor) {
+	canvasContext.fillStyle = drawColor;
+	canvasContext.fillRect(0,0,canvas.width,canvas.height);
+}
+
+</script>
+
+</html>
