@@ -111,3 +111,24 @@ ballX = canvas.width/2;
 ballY = canvas.height/2;
 }
 
+// This enables the COMPUTER to MOVE the RIGHT RACKET to ENGAGE the PLAYER
+function computerMovement() { 
+
+    // This enables the COMPUTER to keep its RACKET CENTERED with the BALL
+    var racket2Center = racket2 + (RACKET_HEIGHT/2);
+
+        if(racket2Center < ballY-35) {
+
+            // You can alternatively write "racket2 += 6" to avoid syntax error
+            // This makes the BALL MOVE DOWN
+            racket2 = racket2 + 6; 
+
+        } else if(racket2Center > ballY+35)  {
+
+            // You can alternatively write "racket2 -= 6" to avoid syntax error
+            // This makes the BALL MOVE UP
+            racket2 = racket2 - 6;
+    }
+}
+
+
