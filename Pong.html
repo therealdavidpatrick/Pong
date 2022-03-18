@@ -131,4 +131,16 @@ function computerMovement() {
     }
 }
 
+// We DEFINE this FUNCTION with the STIPULATIONS of MOTION, SPEED, and DIRECTION, i.e. VELOCITY
+function moveEverything() {
 
+    if(displayTheWinScreen) {
+        return;
+    }
+
+    computerMovement();
+ 
+    ballX = ballX + ballSpeedX;
+    ballY = ballY + ballSpeedY;
+
+}
